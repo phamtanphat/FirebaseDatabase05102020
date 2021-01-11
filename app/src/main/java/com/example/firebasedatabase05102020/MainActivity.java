@@ -1,6 +1,7 @@
 package com.example.firebasedatabase05102020;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -96,11 +98,42 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         // 3 : Dang hashmap
-        myRef.child("Lichkhaigiang").addValueEventListener(new ValueEventListener() {
+//        myRef.child("Lichkhaigiang").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                HashMap<String  , Long> lich = (HashMap<String, Long>) snapshot.getValue();
+//                Toast.makeText(MainActivity.this, lich.get("Android").toString(), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        // 4 : Lay dữ liệu dạng mảng
+        myRef.child("Tinnhan").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String  , Long> lich = (HashMap<String, Long>) snapshot.getValue();
-                Log.d("BBB",lich.get("Android").toString());
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("BBB",snapshot.getKey());
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    String key = dataSnapshot.getKey();
+                    Log.d("BBB",key);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
