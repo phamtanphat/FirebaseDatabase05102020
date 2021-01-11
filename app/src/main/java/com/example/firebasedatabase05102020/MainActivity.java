@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,5 +63,37 @@ public class MainActivity extends AppCompatActivity {
 
         // 4 : Gui dang array object
 //        myRef.child("Tinnhan").push().setValue(new Tinnhan("Ti","Xin chao"));
+
+        // Đọc về
+        // 1 : Dạng chuỗi
+//        myRef.child("Nguyen Van Teo").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                String value = (String) snapshot.getValue();
+//                Toast.makeText(MainActivity.this, value, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        // 2 : Dạng object
+        myRef.child("Phuongtien").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Phuongtien phuongtien = snapshot.getValue(Phuongtien.class);
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    String key = snap.getKey();
+                    Log.d("BBB",key);
+                }
+//                Toast.makeText(MainActivity.this, phuongtien.getTen(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
