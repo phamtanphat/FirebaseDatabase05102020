@@ -79,15 +79,28 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         // 2 : Dạng object
-        myRef.child("Phuongtien").addValueEventListener(new ValueEventListener() {
+//        myRef.child("Phuongtien").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Phuongtien phuongtien = snapshot.getValue(Phuongtien.class);
+//                for (DataSnapshot snap : snapshot.getChildren()) {
+//                    String key = snap.getKey();
+//                    Log.d("BBB",key);
+//                }
+////                Toast.makeText(MainActivity.this, phuongtien.getTen(), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        // 3 : Dang hashmap
+        myRef.child("Lichkhaigiang").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Phuongtien phuongtien = snapshot.getValue(Phuongtien.class);
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    String key = snap.getKey();
-                    Log.d("BBB",key);
-                }
-//                Toast.makeText(MainActivity.this, phuongtien.getTen(), Toast.LENGTH_SHORT).show();
+                HashMap<String  , Long> lich = (HashMap<String, Long>) snapshot.getValue();
+                Log.d("BBB",lich.get("Android").toString());
             }
 
             @Override
